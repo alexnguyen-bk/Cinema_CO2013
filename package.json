@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/alexnguyen-bk/Cinema_CO2013#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
   }
 }
