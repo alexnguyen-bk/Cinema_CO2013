@@ -1,0 +1,25 @@
+{
+  "name": "cinema-co2013",
+  "version": "1.0.0",
+  "description": "btl-hk242-co2013",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexnguyen-bk/Cinema_CO2013.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Alex Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexnguyen-bk/Cinema_CO2013/issues"
+  },
+  "homepage": "https://github.com/alexnguyen-bk/Cinema_CO2013#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
