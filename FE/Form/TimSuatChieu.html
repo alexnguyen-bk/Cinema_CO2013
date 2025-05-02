@@ -1,0 +1,25 @@
+<div class="container">
+    <button onclick="toggleForm('form-container')">Hiển thị Form Nhập Thủ Tục</button>
+    <div id="form-container" style="display: none;">
+      <h1>Gọi thủ tục TimSuatChieu</h1>
+      <div class="form-group">
+        <label for="ngay">Ngày:</label>
+        <input type="date" id="ngay">
+      </div>
+      <div class="form-group">
+        <label for="gio">Giờ:</label>
+        <input type="time" id="gio">
+      </div>
+      <div class="form-group">
+        <label for="rap">Tên rạp:</label>
+        <input type="text" id="rap" placeholder="Tên rạp">
+      </div>
+      <div class="form-group">
+        <label for="theloai">Thể loại:</label>
+        <input type="text" id="theloai" placeholder="Thể loại phim">
+      </div>
+      <button onclick="callFunction(getTimSuatChieuParams)">Gọi Thủ Tục</button>
+    </div>
+    <div id="output"></div>
+  </div>
+  

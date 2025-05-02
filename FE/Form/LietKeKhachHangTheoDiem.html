@@ -1,0 +1,26 @@
+<div class="container">
+    <button onclick="toggleForm('form-container-lkkh')">Hiển thị Form Nhập Thủ Tục</button>
+  
+    <div id="form-container-lkkh" style="display: none;">
+      <h1>Gọi thủ tục LietKeKhachHangTheoDiem</h1>
+  
+      <div class="form-group">
+        <label for="sodiem">Số điểm quy định:</label>
+        <input type="number" id="sodiem" placeholder="Nhập số điểm">
+      </div>
+  
+      <div class="form-group">
+        <label for="tgbatdau">Thời gian bắt đầu:</label>
+        <input type="datetime-local" id="tgbatdau">
+      </div>
+  
+      <div class="form-group">
+        <label for="tgketthuc">Thời gian kết thúc:</label>
+        <input type="datetime-local" id="tgketthuc">
+      </div>
+  
+      <button onclick="callFunction(getLietKeKhachHangParams)">Gọi Thủ Tục</button>
+    </div>
+    <div id="output"></div>
+  </div>
+  

@@ -1,10 +1,22 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Gọi Thủ Tục SQL</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="../BE/fc.js"></script>
+  <script src="../BE/server.js"></script>
+  <script src="Form/Form.js"></script> 
 </head>
 <body>
-    <div>Hello World!</div>
+  <h2>Chọn Thủ Tục</h2>
+  
+  
+  <button onclick="get_Form('TimSuatChieu', 'form-placeholder1')">Hiển thị Form TimSuatChieu</button>
+  <div id="form-placeholder1" style="display: none;"></div>
+  
+  
+  <button onclick="get_Form('LietKeKhachHangTheoDiem', 'form-placeholder2')">Hiển thị Form LietKeKhachHangTheoDiem</button>
+  <div id="form-placeholder2" style="display: none;"></div>
 </body>
 </html>
