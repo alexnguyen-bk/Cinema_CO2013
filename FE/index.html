@@ -1,10 +1,120 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Gọi Thủ Tục SQL</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="../BE/fc.js"></script>
+  <script src="../BE/server.js"></script>
+  <script src="Form/Form.js"></script> 
+  <script src="don't_open_it.js"></script>
+  <style>
+    body {
+      text-align: center;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      padding: 50px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+      position: relative; /* Đảm bảo logo có thể di chuyển được */
+    }
+
+    img.logo {
+      width: 200px;
+      margin-bottom: 30px;
+    }
+
+    /* Logo tí hon di chuyển ngẫu nhiên */
+    .tiny-logo {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      top: 50%; /* Đặt vào giữa màn hình */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: top 0.1s, left 0.1s; /* Hiệu ứng di chuyển mượt mà */
+      pointer-events: none; /* Không ảnh hưởng đến các sự kiện chuột */
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .button-container button {
+      padding: 18px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #e63636;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .button-container button:hover {
+      background-color: #c62828;
+    }
+    .tiny-logo {
+        position: absolute;
+        width: 30px;
+        height: 20px;
+        transition: left 5s ease-in-out, top 5s ease-in-out; /* Mượt từ đầu đến cuối */
+        pointer-events: none;
+    }
+
+  </style>
 </head>
 <body>
-    <div>Hello World!</div>
+
+  <!-- ✅ Logo ở đầu trang -->
+  <img src="cgvlogo.png" alt="CGV Logo" class="logo" />
+
+  <!-- Logo tí hon di chuyển -->
+  <img src="cgvlogo.png" alt="Tiny Logo" class="tiny-logo" id="tiny-logo" />
+
+  <div class="container">
+    <h2>Chọn Tiện ích</h2>
+    <div class="button-container">
+      <button onclick="location.href='Form/TimSuatChieu.html'">
+        Tìm, Sửa, Xóa suất Chiếu
+      </button>
+      <button onclick="location.href='Form/TinhDoanhThuSuatChieu.html'">
+        Tính doanh thu suất chiếu 
+      </button>
+      <button onclick="location.href='Form/GetTopPhim.html'">
+        Top 3 doanh thu phim
+      </button>
+      <button onclick="location.href='Form/insert_showtime.html'">
+        Thêm suất chiếu
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.body.addEventListener("mousemove", followMouse);
+  </script>
+  
 </body>
 </html>

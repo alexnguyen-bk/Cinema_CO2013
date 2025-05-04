@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <script src="../../BE/fc.js"></script>
+  <script src="../../BE/server.js"></script>
+  <script src="Form.js"></script> 
+  <title>Gọi Thủ Tục Tìm Suất Chiếu</title>
+  <style>
+    #draggableModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 800px;
+    }
+
+    #modalHeader {
+        width: 100%;
+        cursor: move;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        position: relative;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f5f5f5;
+      position: relative;
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+    }
+
+    .logo-container img {
+      height: 70px;
+      object-fit: contain;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #form-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-end;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      flex: 1 1 180px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #e63636;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      height: 42px;
+    }
+
+    button:hover {
+      background-color: #c62828;
+    }
+
+    #output {
+      margin-top: 30px;
+      overflow-x: auto;
+    }
+
+    #output table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+    }
+
+    #output th, #output td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    #output th {
+      background-color: #e63636;
+      color: white;
+    }
+
+    #output tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    #editModal.show {
+        display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo ở góc phải trên -->
+  <button class="back-button" onclick="window.location.href='../index.html'">Quay lại</button>
+  <div class="logo-container">
+    <img src="../cgvlogo.png" alt="Logo" />
+  </div>
+
+  <div class="container">
+    <h1 style="margin-top: 20px;">Tìm, Sửa, Xóa suất chiếu</h1>
+
+    <div id="form-container">
+      <div class="form-group">
+        <label for="ngay">Ngày:</label>
+        <input type="date" id="ngay">
+      </div>
+
+      <div class="form-group">
+        <label for="gio">Giờ:</label>
+        <input type="time" id="gio">
+      </div>
+
+      <div class="form-group">
+        <label for="rap">Tên rạp:</label>
+        <input type="text" id="rap" placeholder="Tên rạp">
+      </div>
+
+      <div class="form-group">
+        <label for="theloai">Thể loại:</label>
+        <input type="text" id="theloai" placeholder="Thể loại phim">
+      </div>
+
+      <div class="form-group">
+        <label for="tuade">Tựa đề:</label>
+        <input type="text" id="tuade" placeholder="Tựa đề phim">
+      </div>
+
+      <div class="form-group" style="flex: 0 0 auto;">
+        <button onclick="getsuatchieu();callFunction(getTimSuatChieuParams,null);showCheckMark('1080px','240px','30px')">Lọc thông tin</button>
+      </div>
+    </div>
+
+    <div id="output"></div>
+  </div>
+
+    <!-- Đây là phần modal ẩn ban đầu -->
+<div id="editModal" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+  <div style="background:white; padding:20px; border-radius:8px; width:800px; position:relative; display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
+
+    <!-- Nút đóng (×) -->
+
+    <h3 style="width: 100%; text-align: center;">Cập nhật suất chiếu</h3>
+    <form id="updateForm" style="width: 100%; display: flex; flex-wrap: wrap; gap: 10px;">
+      <div style="width: 45%;">
+        <label>ID Suất Chiếu: <input type="number" name="p_ID_SuatChieu" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>Định Dạng Phim: <input type="text" name="p_DinhDangPhim" maxlength="9" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>Ngôn Ngữ: <input type="text" name="p_NgonNgu" maxlength="25" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>Ngày Bắt Đầu: <input type="date" name="p_NgayBatDau" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>Thời Gian Bắt Đầu: <input type="time" name="p_ThoiGianBatDau" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>Mã Rạp: <input type="text" name="p_MaRap" maxlength="5" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>Phòng Số: <input type="number" name="p_PhongSo" required></label>
+      </div>
+      <div style="width: 45%;">
+        <label>ID Phim: <input type="text" name="p_ID_Phim" maxlength="10" required></label>
+      </div>
+
+      <!-- Các nút Cập nhật và Hủy -->
+      <div style="display: flex; justify-content: space-between; width: 100%; padding-top: 20px;">
+        <button type="button" onclick="callFunction(getupdate, 'update');callFunction(getTimSuatChieuParams,null)">Cập nhật</button>
+        <button type="button" onclick="closeModal('editModal');callFunction(getTimSuatChieuParams,null)">Hủy</button>
+      </div>
+      <div id="output2"></div>
+    </form>
+  </div>
+</div>
+<div id="editModal2" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+  <div style="background:white; padding:20px; border-radius:8px; width:400px; position:relative; display: flex; flex-direction: column; gap: 20px;">
+    
+    <h3 style="text-align: center;">Xóa suất chiếu</h3>
+    <form id="deleteForm" style="display: flex; flex-direction: column; gap: 15px;">
+      <label>ID Suất Chiếu: 
+        <input type="number" name="p_ID_SuatChieu" required>
+      </label>
+      
+      <!-- Nút Xác nhận và Hủy -->
+      <div style="display: flex; justify-content: space-between; padding-top: 10px;">
+        <button type="button" onclick="callFunction(getdelete, 'delete');callFunction(getTimSuatChieuParams,null)">Xác nhận</button>
+        <button type="button" onclick="closeModal('editModal2');callFunction(getTimSuatChieuParams,null)">Hủy</button>
+      </div>
+      <div id="output3"></div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
