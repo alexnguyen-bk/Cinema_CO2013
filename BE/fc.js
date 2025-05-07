@@ -194,12 +194,6 @@ function editRow(index) {
   openModal('editModal');
 }
 
-
-
-
-
-
-
 function call2(proc, params, unit ) {
   // Tạo chuỗi params (ví dụ: ["thamso1", 123])
   const paramsStr = JSON.stringify(params);
