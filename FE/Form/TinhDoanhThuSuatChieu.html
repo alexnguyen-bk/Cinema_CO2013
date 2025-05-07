@@ -6,7 +6,7 @@
   <script src="../../BE/fc.js"></script>
   <script src="../../BE/server.js"></script>
   <script src="Form.js"></script> 
-  <title>Tính Doanh Thu Suất Chiếu</title>
+  <title>Tính Doanh Thu</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,6 +19,7 @@
       position: absolute;
       top: 20px;
       right: 40px;
+      
     }
 
     .logo-container img {
@@ -27,23 +28,25 @@
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 980px;
       margin: auto;
       padding: 30px;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      
     }
 
     #form-container {
       display: flex;
+      flex-wrap: wrap;
       gap: 20px;
       align-items: flex-end;
       margin-top: 20px;
     }
 
     .form-group {
-      flex: 1;
+      flex: 1 1 180px;
     }
 
     label {
@@ -76,24 +79,59 @@
       background-color: #c62828;
     }
 
-    #result {
+    #output, #output2 {
       margin-top: 30px;
-      font-size: 18px;
-      font-weight: bold;
-      color: green;
+      overflow-x: auto;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #e63636;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
     }
   </style>
 </head>
 <body>
   <button class="back-button" onclick="window.location.href='../index.html'">Quay lại</button>
-  <!-- Logo ở góc phải trên -->
 
   <div class="logo-container">
     <img src="../cgvlogo.png" alt="Logo" />
   </div>
 
   <div class="container">
-    <h1>Tính Doanh Thu Suất Chiếu</h1>
+    <h1>Tính Doanh Thu Rạp</h1>
+
+    <div id="form-container">
+      <div class="form-group">
+        <label for="ngayBatDau">Ngày bắt đầu:</label>
+        <input type="date" id="ngayBatDau">
+      </div>
+      <div class="form-group">
+        <label for="ngayKetThuc">Ngày kết thúc:</label>
+        <input type="date" id="ngayKetThuc">
+      </div>
+      <div class="form-group" style="flex: 0 0 auto;">
+        <button onclick="callFunction(getTinhDoanhThuTheoNgayParams,'Jason')">Tính doanh thu rạp</button>
+      </div>
+    </div>
+    <div id="output2"></div>
+    <!-- <h2>Tính Doanh Thu Suất Chiếu</h2>
 
     <div id="form-container">
       <div class="form-group">
@@ -101,10 +139,12 @@
         <input type="number" id="idSuatChieu" placeholder="Nhập ID suất chiếu">
       </div>
       <div class="form-group" style="flex: 0 0 auto;">
-        <button onclick="callFunction(gettinhDoanhThu,'VNĐ')">Tính doanh thu</button>
+        <button onclick="callFunction(gettinhDoanhThu,'VNĐ')">Tính doanh thu suất chiếu</button>
       </div>
     </div>
-    <div id="output"></div>
+    <div id="output"></div> -->
+
+    
   </div>
 </body>
 </html>

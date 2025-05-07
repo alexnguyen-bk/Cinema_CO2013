@@ -90,18 +90,33 @@ function callStoredFunction(procName, params, res) {
   
     // Tạo chuỗi CALL với số lượng dấu hỏi tương ứng tham số
     const placeholders = params.map(() => '?').join(', ');
-    
+    let sql;
     // Câu truy vấn với alias cho JSON_TABLE
-    const sql = `SELECT * FROM JSON_TABLE(
-                    ${procName}(${placeholders}),
-                    '$[*]' 
-                    COLUMNS (
-                        TuaDe VARCHAR(30) PATH '$.TuaDe',
-                        DoanhThu INT PATH '$.DoanhThu'
-                    )
-                  ) AS result_table`;
-  
-    console.log(`Gọi thủ tục: ${procName} với tham số:`, params);
+    if(procName=='GetTopPhim'){
+      sql = `SELECT * FROM JSON_TABLE(
+        ${procName}(${placeholders}),
+        '$[*]' 
+        COLUMNS (
+            TuaDe VARCHAR(30) PATH '$.TuaDe',
+            DoanhThu INT PATH '$.DoanhThu'
+        )
+      ) AS result_table`;
+
+      console.log(`Gọi thủ tục: ${procName} với tham số:`, params);
+    }
+    else if(procName=='ThongKeDoanhThuTheoKhoangNgay'){
+      sql = `SELECT * FROM JSON_TABLE(
+        ${procName}(${placeholders}),
+        '$[*]' COLUMNS (
+          TenRap VARCHAR(30) PATH '$.TenRap',
+          TinhThanh VARCHAR(25) PATH '$.TinhThanh',
+          DiaChi VARCHAR(50) PATH '$.DiaChi',
+          DoanhThu INT PATH '$.DoanhThu'
+          )
+        ) AS DoanhThuTheoRap;`;
+      console.log(`Gọi thủ tục: ${procName} với tham số:`, params);
+    }
+    
     
     // Thực hiện truy vấn
     db.query(sql, params, (err, results) => {
@@ -116,7 +131,7 @@ function callStoredFunction(procName, params, res) {
       }
   
       // Trả về kết quả (nếu có dữ liệu)
-      console.log(`Kết quả từ hàm ${procName}:`, results);
+      console.log(`Kết quả từ hàm ${procName}:`,results );
       res.json(results);  // Trả về toàn bộ kết quả, không chỉ results[0]
     });
   }

@@ -10,6 +10,15 @@ function getTimSuatChieuParams() {
     params: [ngay, gio, rap, theloai, tuade]
   };
 }
+function getTinhDoanhThuTheoNgayParams() {
+  const ngayBatDau = document.getElementById('ngayBatDau').value || null;
+  const ngayKetThuc = document.getElementById('ngayKetThuc').value || null;
+
+  return {
+    proc: 'ThongKeDoanhThuTheoKhoangNgay',
+    params: [ngayBatDau, ngayKetThuc]
+  };
+}
 
 function gettinhDoanhThu() {
   const id = document.getElementById('idSuatChieu').value;

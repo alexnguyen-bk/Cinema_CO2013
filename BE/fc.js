@@ -2,6 +2,56 @@
 const baseURL = 'http://localhost:3000/call-function?';
 let currentData = []; // Biến toàn cục để lưu dữ liệu hiện tại
 let currentData2=[];
+function renderTableWithSorting(data) {
+  if (!Array.isArray(data) || data.length === 0) return '';
+
+  const columns = Object.keys(data[0]);
+
+  let thead = '<thead><tr>';
+  for (const col of columns) {
+    thead += `<th>
+                ${col}<br>
+                <button onclick="sortByColumn('${col}')">🔼🔽</button>
+              </th>`;
+  }
+  thead += '</tr></thead>';
+
+  let tbody = '<tbody>';
+  for (const row of data) {
+    tbody += '<tr>';
+    for (const col of columns) {
+      tbody += `<td>${row[col]}</td>`;
+    }
+    tbody += '</tr>';
+  }
+  tbody += '</tbody>';
+
+  return `<table border="1">${thead}${tbody}</table>`;
+}
+let sortState = {};  // Ghi nhớ trạng thái sắp xếp tăng/giảm
+
+function sortByColumn(column) {
+  if (!currentData || currentData.length === 0) return;
+
+  const ascending = !sortState[column];
+
+  currentData.sort((a, b) => {
+    if (typeof a[column] === 'number') {
+      return ascending ? a[column] - b[column] : b[column] - a[column];
+    }
+    return ascending
+      ? String(a[column]).localeCompare(String(b[column]))
+      : String(b[column]).localeCompare(String(a[column]));
+  });
+
+  sortState[column] = ascending;
+
+  // Gọi lại đúng hàm có nút
+  const tableHtml = renderTableWithEditAndSortButton(currentData);
+  document.getElementById('output').innerHTML = '<h3>Kết quả:</h3>' + getTable(tableHtml);
+}
+
+
 function call(proc, params) {
   const paramsStr = JSON.stringify(params);
   const url = `${baseURL}proc=${proc}&params=${paramsStr}&func=False`;
@@ -24,9 +74,9 @@ function call(proc, params) {
       let tableHtml = '';
 
       if (proc === 'TimSuatChieu') {
-        tableHtml = renderTableWithEditButton(data); // ✅ Gọi đúng dữ liệu
+        tableHtml  = renderTableWithEditAndSortButton(data);; // ✅ Gọi đúng dữ liệu
       } else {
-        tableHtml = renderTableNormally(data); // 👈 Hàm khác hiển thị không có nút
+        tableHtml = renderTableWithSorting(data); // 👈 Hàm khác hiển thị không có nút
       }
 
       output.innerHTML = '<h3>Kết quả:</h3>' + getTable(tableHtml);
@@ -55,37 +105,46 @@ function renderTableNormally(data) {
   return table;
 }
 
-function renderTableWithEditButton(data) {
-  currentData = data; 
+function renderTableWithEditAndSortButton(data) {
+  currentData = data;
+  const columns = Object.keys(data[0]);
 
   let table = '<table border="1" cellpadding="5" cellspacing="0"><thead><tr>';
-  
-  // Tạo tiêu đề cột
-  Object.keys(data[0]).forEach(key => {
-    table += `<th>${key}</th>`;
+
+  // Tạo tiêu đề cột kèm nút sắp xếp
+  columns.forEach(col => {
+    table += `<th>
+                ${col}<br>
+                <button onclick="sortByColumn('${col}')" 
+                        style="padding: 2px 5px; font-size: 10px;">🔼🔽</button>
+              </th>`;
   });
-  table += `<th>Hành động</th>`;
+
+  // Cột cho nút hành động
+  table += '<th>Hành động</th>';
   table += '</tr></thead><tbody>';
 
-  // Tạo các hàng dữ liệu
+  // Dữ liệu từng hàng
   data.forEach((row, index) => {
     table += '<tr>';
-    Object.values(row).forEach(value => {
-      table += `<td>${value}</td>`;
+    columns.forEach(col => {
+      table += `<td>${row[col]}</td>`;
     });
 
-    table += `<td>
-                <button style="background-color: #4CAF50; color: white; padding: 5px 10px; border: none; border-radius: 4px;"
-                        onclick="editRow(${index})">Cập nhật</button>
-                <button style="background-color: #f44336; color: white; padding: 5px 10px; border: none; border-radius: 4px; margin-left: 5px;"
-                        onclick="deleteRow(${index})">Xóa</button>
-              </td>`;
+    table += `<td style="display: flex; gap: 6px; justify-content: center;">
+      <button style="background-color: #4CAF50; color: white; padding: 5px 10px; border: none; border-radius: 4px;"
+              onclick="editRow(${index})">Cập nhật</button>
+      <button style="background-color: #f44336; color: white; padding: 5px 10px; border: none; border-radius: 4px;"
+              onclick="deleteRow(${index})">Xóa</button>
+    </td>`;
     table += '</tr>';
+
   });
 
   table += '</tbody></table>';
   return table;
 }
+
 
 
 
@@ -104,30 +163,25 @@ function getsuatchieu() {
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      let output = document.getElementById('output');
       currentData2 = data; 
-      output.innerHTML = 'success';
     })
-    .catch(error => {
-      console.error('Lỗi:', error);
-      document.getElementById('output').textContent = 'Đã xảy ra lỗi khi gọi API!';
-    });
 }
 function editRow(index) {
   // Tìm kiếm suất chiếu trong currentData dựa trên showtime_id
+  let output = document.getElementById('output');
   const row1=currentData[index];
   id=row1.ID_SuatChieu;
-  const date = new Date(row1.NgayChieu);
-  date.setUTCDate(date.getUTCDate() + 1); // cộng thêm 1 ngày ở UTC
+  const row = currentData2.find(item => item.showtime_id === id);
+  const date = new Date(row.NgayBatDau);
+  date.setUTCDate(date.getUTCDate() + 1);
 
   const formattedDate = date.toISOString().split("T")[0]; 
-  const row = currentData2.find(item => item.showtime_id === id);
   const form = document.forms['updateForm'];
-
+  //output.innerHTML = '<h3>Kết quả:</h3>' + getTable(row);
   form.reset();
 
-  // Gán dữ liệu vào các trường form
-  form.p_ID_SuatChieu.value = row.showtime_id;       // ID suất chiếu
+  // // Gán dữ liệu vào các trường form
+  form.p_ID_SuatChieu.value = id;       // ID suất chiếu
   form.p_DinhDangPhim.value = row.movie_format;      // Định dạng phim
   form.p_NgonNgu.value = row.language;               // Ngôn ngữ
   form.p_NgayBatDau.value = formattedDate;          // Ngày bắt đầu
@@ -136,7 +190,7 @@ function editRow(index) {
   form.p_PhongSo.value = row.room_number;            // Phòng số
   form.p_ID_Phim.value = row.movie_id;               // ID phim
 
-  // Hiển thị modal để chỉnh sửa
+  // // Hiển thị modal để chỉnh sửa
   openModal('editModal');
 }
 
@@ -179,7 +233,13 @@ function call3(proc, params) {
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      let output = document.getElementById('output');
+      let output;
+      if(proc=='GetTopPhim'){
+        output = document.getElementById('output');
+      }
+      else if(proc=='ThongKeDoanhThuTheoKhoangNgay') {
+        output = document.getElementById('output2');
+      }
       if (data.error) {
         output.textContent = 'Lỗi: ' + data.error;
         return;
@@ -192,18 +252,24 @@ function call3(proc, params) {
 
       // Tạo bảng từ dữ liệu
       let table = '<table border="1" cellpadding="5" cellspacing="0"><thead><tr>';
-      Object.keys(data[0]).forEach(key => {
+
+      // Lấy các key từ object đầu tiên làm tiêu đề cột
+      const keys = Object.keys(data[0]);
+      keys.forEach(key => {
         table += `<th>${key}</th>`;
       });
       table += '</tr></thead><tbody>';
 
+      // Tạo từng dòng
       data.forEach(row => {
         table += '<tr>';
-        Object.values(row).forEach(value => {
+        keys.forEach(key => {
+          const value = row[key] !== undefined && row[key] !== null ? row[key] : '';
           table += `<td>${value}</td>`;
         });
         table += '</tr>';
       });
+
       table += '</tbody></table>';
 
       // Hiển thị kết quả
