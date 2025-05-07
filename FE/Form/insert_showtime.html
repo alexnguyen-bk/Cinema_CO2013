@@ -3,107 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
+  <link rel="stylesheet" href="form-styles.css">
   <script src="../../BE/fc.js"></script>
   <script src="../../BE/server.js"></script>
   <script src="Form.js"></script> 
   <title>Gọi Thủ Tục Tìm Top Phim</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f5f5f5;
-      position: relative;
-    }
-
-    .logo-container {
-      position: absolute;
-      top: 20px;
-      right: 40px;
-    }
-
-    .logo-container img {
-      height: 70px;
-      object-fit: contain;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 30px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    #form-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      align-items: flex-end;
-      margin-top: 20px;
-    }
-
-    .form-group {
-      flex: 1 1 180px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #e63636;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-      height: 42px;
-    }
-
-    button:hover {
-      background-color: #c62828;
-    }
-
-    #output {
-      margin-top: 30px;
-      overflow-x: auto;
-    }
-
-    #output table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #ffffff;
-    }
-
-    #output th, #output td {
-      padding: 12px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
-
-    #output th {
-      background-color: #e63636;
-      color: white;
-    }
-
-    #output tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  </style>
 </head>
 <body>
 
@@ -124,7 +28,10 @@
           
           <div class="form-group">
             <label for="language">Ngôn ngữ:</label>
-            <input type="text" id="language" placeholder="VD: Tiếng Việt">
+            <select id="language">
+              <option value="Vietsub">Vietsub</option>
+              <option value="Thuyết minh">Thuyết minh</option>
+            </select>
           </div>
           
           <div class="form-group">

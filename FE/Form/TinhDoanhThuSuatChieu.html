@@ -3,109 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="form-styles.css">
   <script src="../../BE/fc.js"></script>
   <script src="../../BE/server.js"></script>
   <script src="Form.js"></script> 
   <title>Tính Doanh Thu</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f5f5f5;
-      position: relative;
-    }
-
-    .logo-container {
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      
-    }
-
-    .logo-container img {
-      height: 70px;
-      object-fit: contain;
-    }
-
-    .container {
-      max-width: 980px;
-      margin: auto;
-      padding: 30px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      
-    }
-
-    #form-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      align-items: flex-end;
-      margin-top: 20px;
-    }
-
-    .form-group {
-      flex: 1 1 180px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #e63636;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-      height: 42px;
-    }
-
-    button:hover {
-      background-color: #c62828;
-    }
-
-    #output, #output2 {
-      margin-top: 30px;
-      overflow-x: auto;
-      font-size: 16px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #ffffff;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #e63636;
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  </style>
 </head>
 <body>
   <button class="back-button" onclick="window.location.href='../index.html'">Quay lại</button>
@@ -132,7 +34,6 @@
     </div>
     <div id="output2"></div>
     <!-- <h2>Tính Doanh Thu Suất Chiếu</h2>
-
     <div id="form-container">
       <div class="form-group">
         <label for="idSuatChieu">ID Suất Chiếu:</label>
@@ -143,8 +44,6 @@
       </div>
     </div>
     <div id="output"></div> -->
-
-    
   </div>
 </body>
 </html>
