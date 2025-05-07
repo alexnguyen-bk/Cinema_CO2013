@@ -14,6 +14,11 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
+    background-image: url('cinema.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 h1, h3 {
@@ -96,15 +101,24 @@ table tr:nth-child(even) {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
     width: 100%;
-    max-width: 700px;
-    padding: 30px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 32px 24px;
+    background: rgba(30, 30, 30, 0.8); /* Nền tối trong suốt */
+    border-radius: 16px;                /* Bo góc mềm mại */
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5); /* Bóng đổ nhẹ */
+    color: #fff;                        /* Chữ trắng cho dễ đọc */
+    text-align: center;                 /* Căn giữa nội dung */
 }
+
+/* .container {
+    background: rgba(255,255,255,0.80);
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    padding: 32px 24px;
+    backdrop-filter: blur(6px);
+  } */
 
 #form-container {
     display: flex;
@@ -138,6 +152,9 @@ img.logo {
 }
 
 .button-container button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 18px 24px;
     font-size: 16px;
     border: none;
