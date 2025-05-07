@@ -9,7 +9,7 @@ body {
 .logo-container {
   position: absolute;
   top: 20px;
-  right: 40px;
+  right: 20px;
 }
 
 .logo-container img {
@@ -18,7 +18,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: auto;
   padding: 30px;
   background-color: white;
@@ -69,7 +69,8 @@ button:hover {
 }
 
 /* Table styles */
-#output, #output2 {
+#output,
+#output2 {
   margin-top: 30px;
   overflow-x: auto;
 }
@@ -80,7 +81,8 @@ table {
   background-color: #ffffff;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: left;
   border: 1px solid #ddd;
@@ -114,15 +116,15 @@ tr:nth-child(even) {
   border-radius: 8px;
   width: 800px;
   position: relative;
-} 
+}
 
 .form-group select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
-    background: #fff;
-    height: 40px; /* hoặc cùng height với input */
-  }
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: #fff;
+  height: 40px; /* hoặc cùng height với input */
+}
