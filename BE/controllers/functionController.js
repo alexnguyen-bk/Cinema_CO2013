@@ -95,7 +95,7 @@ function callStoredFunctionJason(procName, params, res) {
     }
 
     if (!results || results.length === 0) {
-      return res.status(404).json({ error: 'Không có dữ liệu trả về từ thủ tục' });
+      return res.status(404).json({ error: 'Không có dữ liệu trả về' });
     }
 
     console.log(`Kết quả từ hàm ${procName}:`,results );

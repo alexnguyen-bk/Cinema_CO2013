@@ -235,7 +235,15 @@ function call3(proc, params) {
         output = document.getElementById('output2');
       }
       if (data.error) {
-        output.textContent = 'Lỗi: ' + data.error;
+        if(paramsStr=='[""]' || (data.error=='Lỗi khi gọi hàm SQL' && proc=='ThongKeDoanhThuTheoKhoangNgay')){
+          output.textContent = 'Lỗi: Nhập thiếu thông tin';
+        }
+        else if(data.error=='Lỗi khi gọi hàm SQL'){
+          output.textContent = 'Không có dữ liệu.';
+        }
+        else {
+          output.textContent = 'Lỗi: ' + data.error;
+        }
         return;
       }
 

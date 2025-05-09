@@ -3,5 +3,23 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mysql2": "^3.14.1"
-  }
+  },
+  "name": "cinema_co2013",
+  "version": "1.0.0",
+  "description": "BTL_CO2013_HK242_L05",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexnguyen-bk/Cinema_CO2013.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexnguyen-bk/Cinema_CO2013/issues"
+  },
+  "homepage": "https://github.com/alexnguyen-bk/Cinema_CO2013#readme"
 }
